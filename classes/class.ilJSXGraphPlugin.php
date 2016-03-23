@@ -22,7 +22,7 @@ class ilJSXGraphPlugin extends ilPageComponentPlugin
          */
         function getPluginName()
         {
-                return "JSXGraph";
+                return "jsxGraph";
         }
         
         
