@@ -14,7 +14,7 @@ include_once("./Services/COPage/classes/class.ilPageComponentPluginGUI.php");
  * @version $Id$
  * @ilCtrl_isCalledBy ilJSXGraphPluginGUI: ilPCPluggedGUI
  */
-class ilJSXGraphPluginGUI extends ilPageComponentPluginGUI
+class iljsxGraphPluginGUI extends ilPageComponentPluginGUI
 {
         /**
          * Execute command
@@ -126,52 +126,61 @@ class ilJSXGraphPluginGUI extends ilPageComponentPluginGUI
                 $tpl->setContent($form->getHtml());
  
         }
-        
-        
-        /**
-         * Init editing form
-         *
-         * @param        int        $a_mode        Edit Mode
-         */
-        public function initForm($a_create = false)
-        {
-                global $lng, $ilCtrl,  $tpl;
- 
-                include_once("Services/Form/classes/class.ilPropertyFormGUI.php");
-                $form = new ilPropertyFormGUI();
-
-                // value two 
-                $v2 = new ilTextInputGUI($this->getPlugin()->txt("width"), "width");
-                $v2->setMaxLength(40);
-                $v2->setSize(40);
-                $form->addItem($v2);
-                
-                $v3= new ilTextInputGUI($this->getPlugin()->txt("height"), "height");
-                $v3->setMaxLength(40);
-                $v3->setSize(40);
-                $form->addItem($v3);
-                $pl = $this->getPlugin();
-                $edittpl = $pl->getTemplate("tpl.editor.html");
-		$edittpl->setVariable("BASEDIR",$pl->getDirectory());
-		$edittpl->setVariable("TXT_RUN_CODE",$pl->txt("runcode"));
-                if (!$a_create){
-                        $prop = $this->getProperties();
-		        $edittpl->setVariable("GRAPHBOX",$prop["graphbox"]);
-			$edittpl->setVariable("JSXCODE",$prop["jsxcode"]);
-                	$edittpl->setVariable("HEIGHT", $prop["height"]);
-	                $edittpl->setVariable("WIDTH", $prop["width"]);
+	
+	/**
+	 * Init editing form
+	 *
+	 * @param int $a_mode
+	 *        	Edit Mode
+	 */
+	public function initForm($a_create = false) {
+		global $lng, $ilCtrl, $tpl;
+		
+		include_once ("Services/Form/classes/class.ilPropertyFormGUI.php");
+		$form = new ilPropertyFormGUI ();
+		
+		// value two
+		$v2 = new ilTextInputGUI ( $this->getPlugin ()->txt ( "width" ), "width" );
+		$v2->setMaxLength ( 40 );
+		$v2->setSize ( 40 );
+		$form->addItem ( $v2 );
+		
+		$v3 = new ilTextInputGUI ( $this->getPlugin ()->txt ( "height" ), "height" );
+		$v3->setMaxLength ( 40 );
+		$v3->setSize ( 40 );
+		$form->addItem ( $v3 );
+		
+		$pl = $this->getPlugin ();
+		$edittpl = $pl->getTemplate ( "tpl.editor.html" );
+		$edittpl->setVariable ( "BASEDIR", $pl->getDirectory () );
+		$edittpl->setVariable ( "TXT_RUN_CODE", $pl->txt ( "runcode" ) );
+		
+		if (! $a_create) {
+			$prop = $this->getProperties ();
+			$edittpl->setVariable ( "GRAPHBOX", $prop ["graphbox"] );
+			$edittpl->setVariable ( "JSXCODE", $prop ["jsxcode"] );
+			$edittpl->setVariable ( "HEIGHT", $prop ["height"] );
+			$edittpl->setVariable ( "WIDTH", $prop ["width"] );
+			$uniqid = $prop ["graphbox"];
 		} else {
-		        $uniqid = uniqid("jsxgraphbox");
-		        $edittpl->setVariable("GRAPHBOX",$uniqid);
-			$edittpl->setVariable("JSXCODE","var brd = JXG.JSXGraph.initBoard('".$uniqid."', {boundingbox: [-2, 2, 2, -2]});");
-                	$edittpl->setVariable("HEIGHT", "500");
-	                $edittpl->setVariable("WIDTH", "500");
+			$uniqid = uniqid ( "jsxgraphbox" );
+			$edittpl->setVariable ( "GRAPHBOX", $uniqid );
+			$edittpl->setVariable ( "JSXCODE", "var brd = JXG.JSXGraph.initBoard('" . $uniqid . "', {boundingbox: [-2, 2, 2, -2]});" );
+			$edittpl->setVariable ( "HEIGHT", "500" );
+			$edittpl->setVariable ( "WIDTH", "500" );
 		}
 		
-		$acehtml = $edittpl->get();
-		$v1 = new ilCustomInputGUI($this->getPlugin()->txt("jsxcode"));
-		$v1->setHTML($acehtml);
-		$form->addItem($v1);
+		$jsxID = new ilNonEditableValueGUI ( $this->getPlugin ()->txt ( "jsxID" ), "jsxID" );
+		$jsxID->setValue ( $uniqid );
+		$jsxID->setInfo ( $this->getPlugin ()->txt ( "jsxID_info" ), "jsxID_info" );
+		
+		$form->addItem ( $jsxID );
+		
+		$acehtml = $edittpl->get ();
+		$v1 = new ilCustomInputGUI ( $this->getPlugin ()->txt ( "jsxpreview" ) );
+		$v1->setHTML ( $acehtml );
+		$v1->setInfo ( $this->getPlugin ()->txt ( "jsxcode_info" ), "jsxcode_info" );
+		$form->addItem ( $v1 );
                 if (!$a_create)
                 {
                         $prop = $this->getProperties();

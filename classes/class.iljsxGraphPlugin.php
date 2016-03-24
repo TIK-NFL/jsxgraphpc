@@ -13,7 +13,7 @@ include_once("./Services/COPage/classes/class.ilPageComponentPlugin.php");
  * @version $Id$
  *
  */
-class ilJSXGraphPlugin extends ilPageComponentPlugin
+class iljsxGraphPlugin extends ilPageComponentPlugin
 {
         /**
          * Get plugin name 
@@ -22,7 +22,7 @@ class ilJSXGraphPlugin extends ilPageComponentPlugin
          */
         function getPluginName()
         {
-                return "JSXGraph";
+                return "jsxGraph";
         }
         
         
@@ -33,7 +33,7 @@ class ilJSXGraphPlugin extends ilPageComponentPlugin
          */
         function isValidParentType($a_parent_type)
         {
-                if (in_array($a_parent_type, array("lm", "wpg")))
+                if (in_array($a_parent_type, array("lm", "wpg", "qpl", "qfbg", "qfbs", "qht")))
                 {
                         return true;
                 }
