@@ -14,7 +14,7 @@ include_once("./Services/COPage/classes/class.ilPageComponentPluginGUI.php");
  * @version $Id$
  * @ilCtrl_isCalledBy ilJSXGraphPluginGUI: ilPCPluggedGUI
  */
-class ilJSXGraphPluginGUI extends ilPageComponentPluginGUI
+class iljsxGraphPluginGUI extends ilPageComponentPluginGUI
 {
         /**
          * Execute command

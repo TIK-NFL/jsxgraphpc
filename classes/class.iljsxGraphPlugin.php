@@ -13,7 +13,7 @@ include_once("./Services/COPage/classes/class.ilPageComponentPlugin.php");
  * @version $Id$
  *
  */
-class ilJSXGraphPlugin extends ilPageComponentPlugin
+class iljsxGraphPlugin extends ilPageComponentPlugin
 {
         /**
          * Get plugin name 
